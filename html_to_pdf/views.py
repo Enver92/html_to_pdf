@@ -17,12 +17,12 @@ def html_to_pdf(request):
 
 
     p = PDFlib()
-    
+
     try:
         # This means we must check return values of load_font() etc.
         p.set_option("errorpolicy=return")
 
-        p.begin_document("test.pdf", "")
+        p.begin_document("", "")
 
         p.begin_page_ext(595, 842, "")
 
@@ -32,12 +32,13 @@ def html_to_pdf(request):
 
         p.setfont(font, 24)
         p.set_text_pos(50, 700)
-        p.show(answer.question_name)
+        p.show("Hi")
         p.continue_text("(says Python)")
         p.end_page_ext("")
 
         p.end_document("")
 
+        buf = p.get_buffer();
 
     except PDFlibException:
         print("PDFlib exception occurred:\n[%d] %s: %s" %
