@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404, HttpResponseServerError
 # from django.conf import settings
 
 from sys import exc_info
@@ -15,6 +15,8 @@ def html_to_pdf(request):
 
     answers = Answer.objects.filter(user=request.user)
 
+    if not answers:
+        raise Http404("No answers.")
 
     p = PDFlib()
 
@@ -30,9 +32,9 @@ def html_to_pdf(request):
         if font == -1:
             raise PDFlibException("Error: " + p.get_errmsg())
 
-        p.setfont(font, 24)
-        p.set_text_pos(50, 700)
-        p.show("Hi")
+        p.setfont(font, 18)
+        p.set_text_pos(90, 800)
+        p.show(answers[0].question_name)
         p.continue_text("(says Python)")
         p.end_page_ext("")
 
@@ -41,14 +43,8 @@ def html_to_pdf(request):
         pdf = p.get_buffer();
         response.write(pdf)
 
-    except PDFlibException:
-        print("PDFlib exception occurred:\n[%d] %s: %s" %
-    	((p.get_errnum()), p.get_apiname(),  p.get_errmsg()))
-        print_tb(exc_info()[2])
-
-    except Exception:
-        print("Exception occurred: %s" % (exc_info()[0]))
-        print_tb(exc_info()[2])
+    except:
+        return HttpResponseServerError()
 
     finally:
         p.delete()
