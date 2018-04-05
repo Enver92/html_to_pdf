@@ -38,7 +38,8 @@ def html_to_pdf(request):
 
         p.end_document("")
 
-        buf = p.get_buffer();
+        pdf = p.get_buffer();
+        response.write(pdf)
 
     except PDFlibException:
         print("PDFlib exception occurred:\n[%d] %s: %s" %
@@ -50,8 +51,7 @@ def html_to_pdf(request):
         print_tb(exc_info()[2])
 
     finally:
-
         p.delete()
 
-    response.write(p)
+
     return response
