@@ -1,4 +1,4 @@
-from pdflib_py import *
+from .pdflib_py import *
 
 class PDFlib(object):
 
@@ -582,4 +582,3 @@ class PDFlib(object):
 
     def translate(self, tx, ty):
         PDF_translate(self.__p, tx, ty)
-
