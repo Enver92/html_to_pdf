@@ -12,8 +12,7 @@ def generate_pdf(request):
     response['Content-Disposition'] = 'attachment; filename="test.pdf"'
 
     answers = Answer.objects.filter(user=request.user)
-    for answer in answers:
-        print(answer.value)
+    
     if not answers:
         raise Http404("No answers.")
 
@@ -41,7 +40,7 @@ def generate_pdf(request):
         p.setfont(font, 18)
 
         p.set_text_pos(90, 800)
-        
+
         p.show("{}\t\t{}".format(answers[0].question_name, answer.value))
         for answer in answers[1:]:
             p.continue_text("{}\t\t{}".format(answer.question_name, answer.value))
