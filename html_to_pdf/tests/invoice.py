@@ -9,10 +9,6 @@ from traceback import print_tb
 from PDFlib.PDFlib import *
 import time
 
-infile = "stationery.pdf"
-
-# This is where font/image/PDF input files live. Adjust as necessary.
-searchpath = "../data"
 
 left = 55
 right = 530
@@ -24,14 +20,6 @@ baseopt = \
         "tabalignment {right left right right right} " +\
         "hortabmethod ruler fontsize 12 "
 
-closingtext = \
-    "Terms of payment: <fillcolor={rgb 1 0 0}>30 days net. " +\
-    "<fillcolor={gray 0}>90 days warranty starting at the day of sale. " +\
-    "This warranty covers defects in workmanship only. " +\
-    "<fontname=Helvetica-BoldOblique encoding=host>Kraxi Systems, Inc. " +\
-    "<resetfont>will, at its option, repair or replace the " +\
-    "product under the warranty. This warranty is not transferable. " +\
-    "No returns or exchanges will be accepted for wet products."
 
 data_name = [
  "Super Kite",
